@@ -42,8 +42,7 @@ assert unique_interests[:6] == [
     'Cassandra',
     'HBase',
     'Hadoop',
-    'Haskell',
-    # ...
+    'Haskell'
 ]
 
 def make_user_interest_vector(user_interests: List[str]) -> List[int]:

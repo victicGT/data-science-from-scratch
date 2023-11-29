@@ -11,7 +11,7 @@ def make_friend_counts_histogram(plt):
     ys = [friend_counts[x] for x in xs]
     plt.bar(xs, ys)
     plt.axis([0,101,0,25])
-    plt.title("Histogram of Friend Counts")
+    plt.title("Histogram of Friend Counts(")
     plt.xlabel("# of friends")
     plt.ylabel("# of people")
     plt.show()
@@ -51,7 +51,7 @@ def quantile(x, p):
     return sorted(x)[p_index]
 
 def mode(x):
-    """returns a list, might be more than one mode"""
+    
     counts = Counter(x)
     max_count = max(counts.values())
     return [x_i for x_i, count in counts.iteritems()
@@ -112,24 +112,23 @@ daily_minutes_good = [x
 
 if __name__ == "__main__":
 
-    print "num_points", len(num_friends)
-    print "largest value", max(num_friends)
-    print "smallest value", min(num_friends)
-    print "second_smallest_value", sorted_values[1]
-    print "second_largest_value", sorted_values[-2]  
-    print "mean(num_friends)", mean(num_friends)
-    print "median(num_friends)", median(num_friends)
-    print "quantile(num_friends, 0.10)", quantile(num_friends, 0.10)
-    print "quantile(num_friends, 0.25)", quantile(num_friends, 0.25)
-    print "quantile(num_friends, 0.75)", quantile(num_friends, 0.75)
-    print "quantile(num_friends, 0.90)", quantile(num_friends, 0.90)
-    print "mode(num_friends)", mode(num_friends)
-    print "data_range(num_friends)", data_range(num_friends)
-    print "variance(num_friends)", variance(num_friends)
-    print "standard_deviation(num_friends)", standard_deviation(num_friends)
-    print "interquartile_range(num_friends)", interquartile_range(num_friends)
-
-    print "covariance(num_friends, daily_minutes)", covariance(num_friends, daily_minutes)
-    print "correlation(num_friends, daily_minutes)", correlation(num_friends, daily_minutes)
-    print "correlation(num_friends_good, daily_minutes_good)", correlation(num_friends_good, daily_minutes_good)
+    print ("num_points", len(num_friends))
+    print ("largest value", max(num_friends))
+    print ("smallest value", min(num_friends))
+    print ("second_smallest_value", sorted_values[1])
+    print ("second_largest_value", sorted_values[-2])  
+    print ("mean(num_friends)", mean(num_friends))
+    print ("median(num_friends)", median(num_friends))
+    print ("quantile(num_friends, 0.10)", quantile(num_friends, 0.10))
+    print ("quantile(num_friends, 0.25)", quantile(num_friends, 0.25))
+    print ("quantile(num_friends, 0.75)", quantile(num_friends, 0.75))
+    print ("quantile(num_friends, 0.90)(", quantile(num_friends, 0.90))
+    print ("mode(num_friends)", mode(num_friends))
+    print ("data_range(num_friends)(", data_range(num_friends))
+    print ("variance(num_friends)(", variance(num_friends))
+    print ("standard_deviation(num_friends)(", standard_deviation(num_friends))
+    print ("interquartile_range(num_friends)(", interquartile_range(num_friends))
+    print ("covariance(num_friends, daily_minutes)(", covariance(num_friends, daily_minutes))
+    print ("correlation(num_friends, daily_minutes)(", correlation(num_friends, daily_minutes))
+    print ("correlation(num_friends_good, daily_minutes_good)(", correlation(num_friends_good, daily_minutes_good))
     

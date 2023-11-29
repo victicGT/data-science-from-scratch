@@ -1,6 +1,8 @@
-import math, random
+import math
+import random
 from collections import defaultdict, Counter
 from linear_algebra import dot
+import matplotlib.pyplot as plt
 
 users_interests = [
     ["Hadoop", "Big Data", "HBase", "Java", "Spark", "Storm", "Cassandra"],
@@ -24,6 +26,7 @@ popular_interests = Counter(interest
                             for user_interests in users_interests
                             for interest in user_interests).most_common()
 
+
 def most_popular_new_interests(user_interests, max_results=5):
     suggestions = [(interest, frequency)
                    for interest, frequency in popular_interests
@@ -34,12 +37,15 @@ def most_popular_new_interests(user_interests, max_results=5):
 # user-based filtering
 #
 
+
 def cosine_similarity(v, w):
     return dot(v, w) / math.sqrt(dot(v, v) * dot(w, w))
 
-unique_interests = sorted(list({ interest
-                                 for user_interests in users_interests
-                                 for interest in user_interests }))
+
+unique_interests = sorted(list({interest
+                                for user_interests in users_interests
+                                for interest in user_interests}))
+
 
 def make_user_interest_vector(user_interests):
     """given a list of interests, produce a vector whose i-th element is 1
@@ -47,16 +53,18 @@ def make_user_interest_vector(user_interests):
     return [1 if interest in user_interests else 0
             for interest in unique_interests]
 
+
 user_interest_matrix = list(map(make_user_interest_vector, users_interests))
 
 user_similarities = [[cosine_similarity(interest_vector_i, interest_vector_j)
                       for interest_vector_j in user_interest_matrix]
                      for interest_vector_i in user_interest_matrix]
 
+
 def most_similar_users_to(user_id):
     pairs = [(other_user_id, similarity)                      # find other
              for other_user_id, similarity in                 # users with
-                enumerate(user_similarities[user_id])         # nonzero
+             enumerate(user_similarities[user_id])         # nonzero
              if user_id != other_user_id and similarity > 0]  # similarity
 
     return sorted(pairs,                                      # sort them
@@ -88,6 +96,7 @@ def user_based_suggestions(user_id, include_current_interests=False):
 # Item-Based Collaborative Filtering
 #
 
+
 interest_user_matrix = [[user_interest_vector[j]
                          for user_interest_vector in user_interest_matrix]
                         for j, _ in enumerate(unique_interests)]
@@ -95,6 +104,7 @@ interest_user_matrix = [[user_interest_vector[j]
 interest_similarities = [[cosine_similarity(user_vector_i, user_vector_j)
                           for user_vector_j in interest_user_matrix]
                          for user_vector_i in interest_user_matrix]
+
 
 def most_similar_interests_to(interest_id):
     similarities = interest_similarities[interest_id]
@@ -104,6 +114,7 @@ def most_similar_interests_to(interest_id):
     return sorted(pairs,
                   key=lambda pair: pair[1],
                   reverse=True)
+
 
 def item_based_suggestions(user_id, include_current_interests=False):
     suggestions = defaultdict(float)
@@ -133,11 +144,15 @@ if __name__ == "__main__":
     print()
 
     print("Most Popular New Interests")
-    print("already like:", ["NoSQL", "MongoDB", "Cassandra", "HBase", "Postgres"])
-    print(most_popular_new_interests(["NoSQL", "MongoDB", "Cassandra", "HBase", "Postgres"]))
+    print("already like:", ["NoSQL", "MongoDB",
+          "Cassandra", "HBase", "Postgres"])
+    print(most_popular_new_interests(
+        ["NoSQL", "MongoDB", "Cassandra", "HBase", "Postgres"]))
     print()
-    print("already like:", ["R", "Python", "statistics", "regression", "probability"])
-    print(most_popular_new_interests(["R", "Python", "statistics", "regression", "probability"]))
+    print("already like:", ["R", "Python",
+          "statistics", "regression", "probability"])
+    print(most_popular_new_interests(
+        ["R", "Python", "statistics", "regression", "probability"]))
     print()
 
     print("User based similarity")
@@ -155,3 +170,22 @@ if __name__ == "__main__":
 
     print("suggestions for user 0")
     print(item_based_suggestions(0))
+
+
+# Tus datos de sugerencias
+user_based_suggestions = [('MapReduce', 1.861807319565799), ('MongoDB', 1.3164965809277263), ('Postgres', 1.3164965809277263), ('NoSQL', 1.2844570503761732), ('MySQL', 0.5773502691896258), ('databases', 0.5773502691896258), ('Haskell', 0.5773502691896258), (
+    'programming languages', 0.5773502691896258), ('artificial intelligence', 0.4082482904638631), ('deep learning', 0.4082482904638631), ('neural networks', 0.4082482904638631), ('C++', 0.4082482904638631), ('Python', 0.2886751345948129), ('R', 0.2886751345948129)]
+
+# Ordena las sugerencias por peso
+user_based_suggestions.sort(key=lambda x: x[1])
+
+# Separa los intereses y los pesos en dos listas
+interests = [x[0] for x in user_based_suggestions]
+weights = [x[1] for x in user_based_suggestions]
+
+# Crea una gráfica de barras
+plt.barh(interests, weights, color='blue')
+plt.xlabel('Peso')
+plt.ylabel('Intereses')
+plt.title('Intereses del usuario 0')
+plt.show()
