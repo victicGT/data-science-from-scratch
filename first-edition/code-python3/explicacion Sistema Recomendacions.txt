@@ -1,0 +1,19 @@
+users_interests es una lista de listas que contiene los intereses de cada usuario.
+
+popular_interests es un objeto Counter que cuenta la frecuencia de cada interés en todos los usuarios.
+
+most_popular_new_interests es una función que devuelve los intereses más populares que un usuario aún no tiene.
+
+cosine_similarity es una función que calcula la similitud del coseno entre dos vectores. Se utiliza para medir cuán similares son dos usuarios en función de sus intereses.
+
+unique_interests es una lista de todos los intereses únicos.
+
+make_user_interest_vector es una función que crea un vector para un usuario donde cada elemento es 1 si el usuario tiene ese interés y 0 en caso contrario.
+
+user_interest_matrix es una lista de todos los vectores de interés de usuario.
+
+user_similarities es una lista de listas que contiene la similitud del coseno entre cada par de usuarios.
+
+most_similar_users_to es una función que devuelve los usuarios más similares a un usuario dado.
+
+user_based_suggestions es una función que devuelve sugerencias de intereses para un usuario basado en los intereses de los usuarios similares.
